@@ -127,8 +127,8 @@ raw_quiz_pool = [
     {
         "q": "單字測驗：Awaay",
         "audio": "Awaay",
-        "options": ["不在/沒有", "有", "很多"],
-        "ans": "不在/沒有",
+        "options": ["沒有", "有", "很多"],
+        "ans": "沒有",
         "hint": "Row 461: Awaay ko payso (沒錢)"
     },
     {
@@ -257,5 +257,6 @@ with tab2:
             
             st.session_state.quiz_questions = final_qs
             safe_rerun()
+
 
 
