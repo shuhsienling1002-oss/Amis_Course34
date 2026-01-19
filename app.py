@@ -103,7 +103,7 @@ sentences = [
     {"amis": "Awaay ko payso.", "chi": "沒有錢。", "icon": "💸", "source": "Row 461"},
     {"amis": "Ciwawa kiso?", "chi": "你有小孩嗎？", "icon": "👶", "source": "Standard Pattern"},
     {"amis": "Awaay ko 'epoc.", "chi": "沒有用處(成果)。", "icon": "🚫", "source": "Row 466"},
-    {"amis": "O ka'emangay ho a wawa.", "chi": "還是幼小的孩子。", "icon": "🧸", "source": "Row 304 (Adapted)"},
+    {"amis": "O ka'emangayho a wawa.", "chi": "還是幼小的孩子。", "icon": "🧸", "source": "Row 304 (Adapted)"},
     {"amis": "Pina ko toki a maomah kami?", "chi": "我們幾點工作？", "icon": "⏰", "source": "Row 676"},
     {"amis": "Cifafahi to ci Kacaw.", "chi": "Kacaw有太太了(結婚了)。", "icon": "💍", "source": "Standard Pattern"},
 ]
@@ -136,7 +136,7 @@ raw_quiz_pool = [
         "audio": "Ka'emangay",
         "options": ["幼小的", "年老的", "巨大的"],
         "ans": "幼小的",
-        "hint": "Row 304: O ka'emangay ho (還是小孩)"
+        "hint": "Row 304: O ka'emangayho (還是小孩)"
     },
     {
         "q": "Pina ko toki a maomah kami?",
@@ -257,3 +257,4 @@ with tab2:
             
             st.session_state.quiz_questions = final_qs
             safe_rerun()
+
