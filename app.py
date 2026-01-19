@@ -87,7 +87,7 @@ vocab_data = [
     {"amis": "Mo^etep", "chi": "十", "icon": "🔟", "source": "Standard", "morph": "Number"},
     {"amis": "Ira", "chi": "有 / 存在", "icon": "🈶", "source": "Row 519", "morph": "Exist"},
     {"amis": "Awa", "chi": "無 / 沒有", "icon": "🈚", "source": "Row 461", "morph": "Negation"},
-    {"amis": "Awaay", "chi": "不在 / 沒有 (強調)", "icon": "📭", "source": "Row 466", "morph": "Awa + ay"},
+    {"amis": "Awaay", "chi": "沒有 (強調)", "icon": "📭", "source": "Row 466", "morph": "Awa + ay"},
     {"amis": "Pina", "chi": "多少 (非人)", "icon": "🔢", "source": "Row 676", "morph": "Q-Word"},
     {"amis": "Papina", "chi": "多少人", "icon": "👥", "source": "Grammar", "morph": "Pa-Pina"},
     {"amis": "Ciwawa", "chi": "有小孩", "icon": "👶", "source": "Morphology", "morph": "Ci + Wawa"},
@@ -257,4 +257,5 @@ with tab2:
             
             st.session_state.quiz_questions = final_qs
             safe_rerun()
+
 
