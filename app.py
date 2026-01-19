@@ -27,37 +27,37 @@ def safe_play_audio(text):
         st.caption(f"🔇 (語音生成暫時無法使用)")
 
 # --- 0. 系統配置 ---
-st.set_page_config(page_title="Unit 33: O Fana' ato Tengil", page_icon="🧠", layout="centered")
+st.set_page_config(page_title="Unit 34: O Sa'osi", page_icon="🔢", layout="centered")
 
-# --- CSS 美化 (知性深紫色) ---
+# --- CSS 美化 (數理邏輯藍綠色) ---
 st.markdown("""
     <style>
     body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
     .source-tag { font-size: 12px; color: #aaa; text-align: right; font-style: italic; }
     .morph-tag { 
-        background-color: #E1BEE7; color: #4A148C; 
+        background-color: #B2DFDB; color: #004D40; 
         padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold;
         display: inline-block; margin-right: 5px;
     }
     
     /* 單字卡 */
     .word-card {
-        background: linear-gradient(135deg, #F3E5F5 0%, #ffffff 100%);
+        background: linear-gradient(135deg, #E0F2F1 0%, #ffffff 100%);
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         text-align: center;
         margin-bottom: 15px;
-        border-bottom: 4px solid #8E24AA;
+        border-bottom: 4px solid #009688;
     }
     .emoji-icon { font-size: 48px; margin-bottom: 10px; }
-    .amis-text { font-size: 22px; font-weight: bold; color: #6A1B9A; }
+    .amis-text { font-size: 22px; font-weight: bold; color: #00796B; }
     .chinese-text { font-size: 16px; color: #7f8c8d; }
     
     /* 句子框 */
     .sentence-box {
-        background-color: #F3E5F5;
-        border-left: 5px solid #AB47BC;
+        background-color: #E0F2F1;
+        border-left: 5px solid #4DB6AC;
         padding: 15px;
         margin: 10px 0;
         border-radius: 0 10px 10px 0;
@@ -66,84 +66,84 @@ st.markdown("""
     /* 按鈕 */
     .stButton>button {
         width: 100%; border-radius: 12px; font-size: 20px; font-weight: 600;
-        background-color: #E1BEE7; color: #4A148C; border: 2px solid #8E24AA; padding: 12px;
+        background-color: #B2DFDB; color: #004D40; border: 2px solid #009688; padding: 12px;
     }
-    .stButton>button:hover { background-color: #CE93D8; border-color: #7B1FA2; }
-    .stProgress > div > div > div > div { background-color: #8E24AA; }
+    .stButton>button:hover { background-color: #80CBC4; border-color: #00796B; }
+    .stProgress > div > div > div > div { background-color: #009688; }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 2. 資料庫 (Unit 33: 18個單字 - User Fix) ---
+# --- 2. 資料庫 (Unit 34: 18個單字 - 數字與數量) ---
 vocab_data = [
-    {"amis": "Tengil", "chi": "聽 (詞根)", "icon": "👂", "source": "Root", "morph": "Root"},
-    {"amis": "Matengil", "chi": "聽到 / 被聽見", "icon": "🔊", "source": "Row 238", "morph": "Ma-Tengil"},
-    {"amis": "Tengilen", "chi": "聽起來 / 去聽 (命令/受事)", "icon": "🎧", "source": "Row 352", "morph": "Tengil-en"},
-    {"amis": "Nengneng", "chi": "看 (詞根)", "icon": "👀", "source": "Root", "morph": "Root"},
-    {"amis": "Minengneng", "chi": "看 / 注視 (主動)", "icon": "🧐", "source": "Row 350", "morph": "Mi-Nengneng"},
-    {"amis": "Nengnengen", "chi": "看起來 / 被看 (受事)", "icon": "🖼️", "source": "Row 350", "morph": "Nengneng-en"},
-    {"amis": "Manengneng", "chi": "看見 / 被看見", "icon": "🫣", "source": "Row 489", "morph": "Ma-Nengneng"},
-    {"amis": "Harateng", "chi": "想法 / 心思 (詞根)", "icon": "🧠", "source": "Root", "morph": "Root"},
-    {"amis": "Miharateng", "chi": "想 / 思考 (主動)", "icon": "🤔", "source": "Row 319", "morph": "Mi-Harateng"},
-    {"amis": "Fana'", "chi": "知 / 會 (詞根)", "icon": "💡", "source": "Root", "morph": "Root"},
-    {"amis": "Mafana'", "chi": "知道 / 懂", "icon": "✅", "source": "Row 6", "morph": "Ma-Fana'"},
-    {"amis": "Kafana'en", "chi": "要知道 / 應當知道", "icon": "ℹ️", "source": "Grammar Ext.", "morph": "Ka-Fana'-en"},
-    {"amis": "Sowal", "chi": "話語 / 語言 (詞根)", "icon": "💬", "source": "Root", "morph": "Root"},
-    {"amis": "Somowal", "chi": "說", "icon": "🗣️", "source": "User Fix", "morph": "Sowal + -om-"}, # 修正
-    {"amis": "Pasowal", "chi": "告訴 / 轉告", "icon": "📢", "source": "Row 377", "morph": "Pa-Sowal"},
-    {"amis": "Araw", "chi": "看見 (詞根)", "icon": "👁️", "source": "User Fix", "morph": "Root"}, # 修正
-    {"amis": "Ma'araw", "chi": "看見了 (結果)", "icon": "🔭", "source": "Row 121", "morph": "Ma-'Araw"},
-    {"amis": "Soni", "chi": "聲音", "icon": "🔔", "source": "Row 238", "morph": "Noun"},
+    {"amis": "Cecay", "chi": "一", "icon": "1️⃣", "source": "Row 737", "morph": "Number"},
+    {"amis": "Tosa", "chi": "二", "icon": "2️⃣", "source": "Row 1242", "morph": "Number"},
+    {"amis": "Tolo", "chi": "三", "icon": "3️⃣", "source": "Row 737", "morph": "Number"},
+    {"amis": "Sepat", "chi": "四", "icon": "4️⃣", "source": "Standard", "morph": "Number"},
+    {"amis": "Lima", "chi": "五 / 手", "icon": "5️⃣", "source": "Standard", "morph": "Number"},
+    {"amis": "Enem", "chi": "六", "icon": "6️⃣", "source": "Standard", "morph": "Number"},
+    {"amis": "Pito", "chi": "七", "icon": "7️⃣", "source": "Standard", "morph": "Number"},
+    {"amis": "Falo", "chi": "八", "icon": "8️⃣", "source": "Standard", "morph": "Number"},
+    {"amis": "Siwa", "chi": "九", "icon": "9️⃣", "source": "Standard", "morph": "Number"},
+    {"amis": "Mo^etep", "chi": "十", "icon": "🔟", "source": "Standard", "morph": "Number"},
+    {"amis": "Ira", "chi": "有 / 存在", "icon": "🈶", "source": "Row 519", "morph": "Exist"},
+    {"amis": "Awa", "chi": "無 / 沒有", "icon": "🈚", "source": "Row 461", "morph": "Negation"},
+    {"amis": "Awaay", "chi": "不在 / 沒有 (強調)", "icon": "📭", "source": "Row 466", "morph": "Awa + ay"},
+    {"amis": "Pina", "chi": "多少 (非人)", "icon": "🔢", "source": "Row 676", "morph": "Q-Word"},
+    {"amis": "Papina", "chi": "多少人", "icon": "👥", "source": "Grammar", "morph": "Pa-Pina"},
+    {"amis": "Ciwawa", "chi": "有小孩", "icon": "👶", "source": "Morphology", "morph": "Ci + Wawa"},
+    {"amis": "Cifafahi", "chi": "有太太 / 娶妻", "icon": "💍", "source": "Row 3980", "morph": "Ci + Fafahi"},
+    {"amis": "Ka'emangay", "chi": "幼小的 / 小孩", "icon": "🧸", "source": "Row 304", "morph": "Ka-'emang-ay"},
 ]
 
 # --- 句子庫 (9句: 嚴格源自 CSV 並移除連字號) ---
 sentences = [
-    {"amis": "Matengil no mako ko soni no tangic.", "chi": "我聽見了哭聲。(哭聲被我聽見)", "icon": "🔊", "source": "Row 238"},
-    {"amis": "Fa'elohay koni a radiw a tengilen.", "chi": "這首歌聽起來是新的。", "icon": "🎧", "source": "Row 352"},
-    {"amis": "Takaraw kiso a nengnengen.", "chi": "你看起來很高。", "icon": "📏", "source": "Row 350"},
-    {"amis": "Caay ka manengneng no mako.", "chi": "我沒看見。(非被我看見)", "icon": "🫣", "source": "Row 489"},
-    {"amis": "Ma'araw ako ko 'adingo iso.", "chi": "我看見你的影子。", "icon": "👻", "source": "Row 121"},
-    {"amis": "Mafana' ci Kacaw tisowanan.", "chi": "Kacaw認識你。", "icon": "💡", "source": "Row 6"},
-    {"amis": "Miharatengay kako to misowalan no miso.", "chi": "我正在想你所說的話。", "icon": "🤔", "source": "Row 319"},
-    {"amis": "O ni a demak 'i, caay kafana' kako.", "chi": "這件事呢，我不知道。", "icon": "🤷", "source": "Row 238 (User Fix)"}, # 修正
-    {"amis": "Pasowalen ci ina.", "chi": "去告訴媽媽。", "icon": "📢", "source": "Row 377 (Adapted)"},
+    {"amis": "Mihatosa ciira to fonos.", "chi": "他一次拿兩把番刀。", "icon": "⚔️", "source": "Row 1242"},
+    {"amis": "Cecay tolo lima pito.", "chi": "一三五七 (報數)。", "icon": "🗣️", "source": "Row 737"},
+    {"amis": "Ira ko payso no miso?", "chi": "你有錢嗎？", "icon": "💰", "source": "Row 519 (Adapted)"},
+    {"amis": "Awaay ko payso.", "chi": "沒有錢。", "icon": "💸", "source": "Row 461"},
+    {"amis": "Ciwawa kiso?", "chi": "你有小孩嗎？", "icon": "👶", "source": "Standard Pattern"},
+    {"amis": "Awaay ko 'epoc.", "chi": "沒有用處(成果)。", "icon": "🚫", "source": "Row 466"},
+    {"amis": "O ka'emangay ho a wawa.", "chi": "還是幼小的孩子。", "icon": "🧸", "source": "Row 304 (Adapted)"},
+    {"amis": "Pina ko toki a maomah kami?", "chi": "我們幾點工作？", "icon": "⏰", "source": "Row 676"},
+    {"amis": "Cifafahi to ci Kacaw.", "chi": "Kacaw有太太了(結婚了)。", "icon": "💍", "source": "Standard Pattern"},
 ]
 
 # --- 3. 隨機題庫 (5題) ---
 raw_quiz_pool = [
     {
-        "q": "Fa'elohay koni a radiw a tengilen.",
-        "audio": "Fa'elohay koni a radiw a tengilen",
-        "options": ["這首歌聽起來是新的", "這首歌很好聽", "這首歌很舊"],
-        "ans": "這首歌聽起來是新的",
-        "hint": "Tengilen (聽起來) (Row 352)"
+        "q": "Mihatosa ciira to fonos.",
+        "audio": "Mihatosa ciira to fonos",
+        "options": ["他拿兩把番刀", "他拿一把番刀", "他沒有番刀"],
+        "ans": "他拿兩把番刀",
+        "hint": "Tosa (二) -> Mihatosa (做兩次/拿兩個) (Row 1242)"
     },
     {
-        "q": "單字測驗：Matengil",
-        "audio": "Matengil",
-        "options": ["聽到/被聽見", "去聽", "聽話"],
-        "ans": "聽到/被聽見",
-        "hint": "Ma- (被動/狀態) + Tengil"
+        "q": "單字測驗：Mo^etep",
+        "audio": "Mo^etep",
+        "options": ["十", "九", "八"],
+        "ans": "十",
+        "hint": "Siwa, Mo^etep..."
     },
     {
-        "q": "單字測驗：Somowal",
-        "audio": "Somowal",
-        "options": ["說", "聽", "看"],
-        "ans": "說",
-        "hint": "User Fix: S-om-owal"
+        "q": "單字測驗：Awaay",
+        "audio": "Awaay",
+        "options": ["不在/沒有", "有", "很多"],
+        "ans": "不在/沒有",
+        "hint": "Row 461: Awaay ko payso (沒錢)"
     },
     {
-        "q": "Miharatengay kako to misowalan no miso.",
-        "audio": "Miharatengay kako to misowalan no miso",
-        "options": ["我正在想你說的話", "我聽不懂你說的話", "我忘記你說的話"],
-        "ans": "我正在想你說的話",
-        "hint": "Miharateng (思考) (Row 319)"
+        "q": "單字測驗：Ka'emangay",
+        "audio": "Ka'emangay",
+        "options": ["幼小的", "年老的", "巨大的"],
+        "ans": "幼小的",
+        "hint": "Row 304: O ka'emangay ho (還是小孩)"
     },
     {
-        "q": "單字測驗：Pasowal",
-        "audio": "Pasowal",
-        "options": ["告訴/轉告", "說話", "吵架"],
-        "ans": "告訴/轉告",
-        "hint": "Pa- (給/使) + Sowal (話)"
+        "q": "Pina ko toki a maomah kami?",
+        "audio": "Pina ko toki a maomah kami",
+        "options": ["我們幾點工作？", "我們在哪裡工作？", "我們跟誰工作？"],
+        "ans": "我們幾點工作？",
+        "hint": "Pina (多少) (Row 676)"
     }
 ]
 
@@ -166,8 +166,8 @@ if 'init' not in st.session_state:
     st.session_state.init = True
 
 # --- 5. 主介面 ---
-st.markdown("<h1 style='text-align: center; color: #6A1B9A;'>Unit 33: O Fana' ato Tengil</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #666;'>認知與感官 (User Corrected)</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #00796B;'>Unit 34: O Sa'osi</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #666;'>數字與數量 (Numbers & Quantities)</p>", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["📚 詞彙與句型", "🎲 隨機挑戰"])
 
@@ -194,7 +194,7 @@ with tab1:
     for i, s in enumerate(sentences):
         st.markdown(f"""
         <div class="sentence-box">
-            <div style="font-size: 20px; font-weight: bold; color: #6A1B9A;">{s['icon']} {s['amis']}</div>
+            <div style="font-size: 20px; font-weight: bold; color: #00796B;">{s['icon']} {s['amis']}</div>
             <div style="font-size: 16px; color: #555; margin-top: 5px;">{s['chi']}</div>
             <div class="source-tag">src: {s['source']}</div>
         </div>
@@ -235,10 +235,10 @@ with tab2:
     else:
         st.progress(1.0)
         st.markdown(f"""
-        <div style='text-align: center; padding: 30px; background-color: #E1BEE7; border-radius: 20px; margin-top: 20px;'>
-            <h1 style='color: #6A1B9A;'>🏆 挑戰成功！</h1>
+        <div style='text-align: center; padding: 30px; background-color: #B2DFDB; border-radius: 20px; margin-top: 20px;'>
+            <h1 style='color: #00796B;'>🏆 挑戰成功！</h1>
             <h3 style='color: #333;'>本次得分：{st.session_state.score}</h3>
-            <p>你已經學會認知與感官詞彙了！</p>
+            <p>你已經學會數字與數量了！</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -253,7 +253,7 @@ with tab2:
                 q_copy = q.copy()
                 shuffled_opts = random.sample(q['options'], len(q['options']))
                 q_copy['shuffled_options'] = shuffled_opts
-                final_qs.append(q_copy)
+                final_questions.append(q_copy)
             
             st.session_state.quiz_questions = final_qs
             safe_rerun()
